@@ -90,7 +90,7 @@
                             <td>{{ persona.rol }}</td>
                             <td>{{ persona.telefono }}</td>
                             <td>{{ persona.sexo }}</td>
-                            <td>{{ persona.fecha_nacimiento }}</td>
+                            <td>{{ persona.fecha_nacimiento|date:"j F Y" }}</td>
                             <td>
                                 <img src="{{ persona.imagen.url }}" alt="Imagen de {{ persona.nombres }}" height="90" width="90">
                             </td>

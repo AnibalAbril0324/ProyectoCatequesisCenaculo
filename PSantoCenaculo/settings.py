@@ -137,5 +137,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '')
 MEDIA_URL = '/imagenes/'
 ##################################################
 ##################################################
+LANGUAGE_CODE = 'es-es'
+USE_L10N = True
+##################################################
+##################################################
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

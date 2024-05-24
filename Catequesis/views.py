@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 
 from django.http import HttpResponse, JsonResponse
 from .models import Persona,Grupo
+from datetime import datetime
 # Create your views here.
 
 #para el formulario de crear la persona 
@@ -68,13 +69,16 @@ def crear_grupo(request):
     
     return render(request,'grupos/crear_grupo.html',{'forgrupo':forgrupo})
 
-def editar_persona(request,id): 
-    persona = Persona.objects.get(id=id)
-    formulario = PersonaForm(request.POST or None, request.FILES or None, instance=persona)
-    if formulario.is_valid() and request.POST:
-        formulario.save()
-        return redirect('personas')
-    return render(request,'personas/editar_persona.html',{'formulario':formulario})
+def editar_persona(request, id):
+    persona = get_object_or_404(Persona, id=id)
+    if request.method == 'POST':
+        formulario = PersonaForm(request.POST, request.FILES, instance=persona)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect('personas')
+    else:
+        formulario = PersonaForm(instance=persona)
+    return render(request, 'personas/editar_persona.html', {'formulario': formulario})
 
 def editar_grupo(request,id): 
     grupo = Grupo.objects.get(id=id)
