@@ -1,0 +1,72 @@
+<form enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    <div class="row">
+        {% for campo in formulario %}
+
+            {% if forloop.counter0|divisibleby:2 %}
+                </div><div class="row">
+            {% endif %}
+
+            <div class="col-md-6">
+                {% if campo.name == 'sexo' %}
+                    <div class="mb-3">
+                        <label for="sexo" class="form-label">Sexo</label>
+                        <select class="form-control" name="sexo" id="sexo">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                        </select>
+                    </div>
+
+                {% elif campo.name == 'rol' %}
+                    <div class="mb-3">
+                        <label for="rol" class="form-label">Rol</label>
+                        <select class="form-control" name="rol" id="rol">
+                            <option value="Alumno">Alumno</option>
+                            <option value="Catequista">Catequista</option>
+                        </select>
+                    </div>
+
+                {% elif campo.name == 'fecha_nacimiento' %}
+                    <div class="mb-3">
+                        <label for="fecha_nacimiento" class="form-label">Fecha Nacimiento</label>
+                        <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" aria-describedby="fecha_nacimiento_help">
+                        <div id="fecha_nacimiento_help" class="form-text">Selecciona una fecha.</div>
+                    </div>
+                    
+                {% elif campo.name == 'grupo' %}
+                    
+                    <div class="mb-3">
+                        <label for="grupo" class="form-label">Grupo</label>
+                        <select class="form-control" name="grupo" id="grupo">
+                            <option value="">Seleccione un grupo</option>
+                            {% for grupo in grupos %}
+                                <option value="{{ grupo.id }}">{{ grupo.nom_grupo }} - {{ grupo.paralelo }} - {{ grupo.dia }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                {% else %}
+                    <div class="mb-3">
+                        <label for="{{ campo.id_for_label }}" class="form-label">{{ campo.label }}</label>
+                        {% if campo.field.widget.input_type == 'file' and campo.value %}
+                            <br>
+                            <img src="{{ MEDIA_URL }}imagenes/{{ campo.value }}" width="100" alt="" class="src">
+                        {% endif %}
+                        <input type="{{ campo.field.widget.input_type }}" 
+                            class="form-control" 
+                            name="{{ campo.name }}" 
+                            id="{{ campo.id_for_label }}" 
+                            aria-describedby="helpId" 
+                            placeholder="{{ campo.label }}"
+                            value="{{ campo.value|default:'' }}" />
+                    </div>
+                    <div class="col-12 help-text">{{ campo.errors }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="mb-3">
+        <input class="btn btn-success" type="submit" value="Enviar" />
+        <a class="btn btn-primary" href="{% url 'personas' %}" role="button">Volver</a>
+    </div>
+</form>

@@ -1,0 +1,60 @@
+<form enctype="multipart/form-data" method="POST" >
+    {% csrf_token %}
+    {% for campo in forgrupo %}
+
+        {% if campo.name == 'paralelo' %}
+            <div class="mb-3">
+                <label for="paralelo" class="form-label">Paralelo</label>
+                <select class="form-control" name="paralelo" id="paralelo">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+        {% elif campo.name == 'dia' %}
+            <div class="mb-3">
+                <label for="dia" class="form-label">Dia</label>
+                <select class="form-control" name="dia" id="dia">
+                    <option value="Viernes">Viernes</option>
+                    <option value="Sabado">Sabado</option>
+                </select>
+            </div>
+        
+        {% elif campo.name == 'fecha_inicio' %}
+            <div class="mb-3">
+                <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+                <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" aria-describedby="fecha_inicio_help">
+                <div id="fecha_inicio_help" class="form-text">Selecciona la fecha de inicio.</div>
+            </div>
+
+        {% elif campo.name == 'fecha_final' %}
+            <div class="mb-3">
+                <label for="fecha_final" class="form-label">Fecha Final</label>
+                <input type="date" class="form-control" name="fecha_final" id="fecha_final" aria-describedby="fecha_final_help">
+                <div id="fecha_final_help" class="form-text">Selecciona la fecha Final.</div>
+            </div>    
+
+        {% else %}
+        <div class="mb-3">
+            <label for="" class="form-label">{{ campo.label }}</label>
+                
+
+            <input type="{{ campo.field.widget.input_type }}" 
+                    class="form-control" 
+                    name="{{ campo.name }}" 
+                    id="" 
+                    aria-describedby="helpId" 
+                    placeholder="{{ campo.label }}"
+                    value="{{ campo.value | default:''}}"
+            />
+
+        </div>
+        <div class="col-12 help-text"> {{ campo.errors}} </div>
+        {% endif %}
+    {% endfor %}
+    
+    <input name="" id="" class="btn btn-success" type="submit" value="Enviar"/>
+    <a name="" id="" class="btn btn-primary" href="{% url 'grupos' %}" role="button">Volver</a>
+
+</form> 

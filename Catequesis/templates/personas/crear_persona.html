@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{%  block  titulo %} Agregar Persona {% endblock %}
+
+{%  block  contenido %} 
+    
+    <div class="card">
+        <div class="card-header">Crear una Persona</div>
+        <div class="card-body">
+            <h4 class="card-title">Datos de la Persona</h4>
+            {% include 'personas/formulario.html' %}
+        </div>
+        <div class="card-footer text-muted">Footer</div>
+    </div>
+    
+{% endblock %}

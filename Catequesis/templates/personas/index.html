@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block titulo %} Personas {% endblock %}
+
+{% block contenido %} 
+    <div class="card">
+        <div class="card-header">
+            <a id="" class="btn btn-success" href="{% url 'crearpersona' %}" role="button">Agregar Nueva Persona</a>
+            <!-- Botón para activar el modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#searchPersonModal">
+                BUSCAR PERSONA
+            </button>
+        </div>
+        <div class="card-body">
+            {% if persona %}
+            <!-- Mostrar solo el resultado de la búsqueda -->
+            <h4 class="card-title">Resultados de la Búsqueda</h4>
+            <div class="table-responsive">
+                <table class="table table-primary">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">CÉDULA</th>
+                            <th scope="col">NOMBRE</th>
+                            <th scope="col">APELLIDO</th>
+                            <th scope="col">DIRECCIÓN</th>
+                            <th scope="col">CORREO</th>
+                            <th scope="col">ROL</th>
+                            <th scope="col">TELÉFONO</th>
+                            <th scope="col">SEXO</th>
+                            <th scope="col">FECHA DE NACIMIENTO</th>
+                            <th scope="col">IMAGEN</th>
+                            <th scope="col">ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>                       
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ persona.cedula }}</td>
+                            <td>{{ persona.nombres }}</td>
+                            <td>{{ persona.apellidos }}</td>
+                            <td>{{ persona.direccion }}</td>
+                            <td>{{ persona.correo }}</td>
+                            <td>{{ persona.rol }}</td>
+                            <td>{{ persona.telefono }}</td>
+                            <td>{{ persona.sexo }}</td>
+                            <td>{{ persona.fecha_nacimiento }}</td>
+                            <td>
+                                <img src="{{ persona.imagen.url }}" alt="Imagen de {{ persona.nombres }}" height="90" width="90">
+                            </td>
+                            <td>
+                                <a id="" class="btn btn-info" href="{% url 'editar' persona.id %}" role="button">Editar</a>
+                                <br><br>
+                                <a id="" class="btn btn-danger" href="{% url 'eliminar' persona.id %}" role="button">Borrar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <!-- Mostrar la tabla original si no hay resultados de búsqueda -->
+            <h4 class="card-title">Alumnos</h4>
+            <div class="table-responsive">
+                <table class="table table-primary">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">CÉDULA</th>
+                            <th scope="col">NOMBRE</th>
+                            <th scope="col">APELLIDO</th>
+                            <th scope="col">DIRECCIÓN</th>
+                            <th scope="col">CORREO</th>
+                            <th scope="col">ROL</th>
+                            <th scope="col">TELÉFONO</th>
+                            <th scope="col">SEXO</th>
+                            <th scope="col">FECHA DE NACIMIENTO</th>
+                            <th scope="col">IMAGEN</th>
+                            <th scope="col">ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for persona in personas %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ persona.cedula }}</td>
+                            <td>{{ persona.nombres }}</td>
+                            <td>{{ persona.apellidos }}</td>
+                            <td>{{ persona.direccion }}</td>
+                            <td>{{ persona.correo }}</td>
+                            <td>{{ persona.rol }}</td>
+                            <td>{{ persona.telefono }}</td>
+                            <td>{{ persona.sexo }}</td>
+                            <td>{{ persona.fecha_nacimiento }}</td>
+                            <td>
+                                <img src="{{ persona.imagen.url }}" alt="Imagen de {{ persona.nombres }}" height="90" width="90">
+                            </td>
+                            <td>
+                                <a id="" class="btn btn-info" href="{% url 'editar' persona.id %}" role="button">Editar</a>
+                                <br><br>
+                                <a id="" class="btn btn-danger" href="{% url 'eliminar' persona.id %}" role="button">Borrar</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>        
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- =============== Modal ================================= -->
+    <div class="modal fade" id="searchPersonModal" tabindex="-1" aria-labelledby="searchPersonModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchPersonModalLabel">BUSCAR PERSONA</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="{% url 'buscar_persona' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="cedula" class="form-label">INGRESE UNA CÉDULA</label>
+                            <input type="text" class="form-control" id="cedula" name="cedula">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CERRAR</button>
+                            <button type="submit" class="btn btn-primary">BUSCAR</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>      
+        </div>
+    </div>
+{% endblock %}
