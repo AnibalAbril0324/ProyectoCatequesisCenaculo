@@ -74,6 +74,7 @@
                             <th scope="col">TELÉFONO</th>
                             <th scope="col">SEXO</th>
                             <th scope="col">FECHA DE NACIMIENTO</th>
+                            <th scope="col">NOMBREGRUPO</th>
                             <th scope="col">IMAGEN</th>
                             <th scope="col">ACCIONES</th>
                         </tr>
@@ -91,6 +92,12 @@
                             <td>{{ persona.telefono }}</td>
                             <td>{{ persona.sexo }}</td>
                             <td>{{ persona.fecha_nacimiento|date:"j F Y" }}</td>
+                            <td>
+                                {% for grupo in persona.grupo.all %}
+                                    {{ grupo.nom_grupo }}
+                                    {% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
                             <td>
                                 <img src="{{ persona.imagen.url }}" alt="Imagen de {{ persona.nombres }}" height="90" width="90">
                             </td>

@@ -78,7 +78,7 @@ def editar_persona(request, id):
             return redirect('personas')
     else:
         formulario = PersonaForm(instance=persona)
-    return render(request, 'personas/editar_persona.html', {'formulario': formulario, 'persona': persona})
+    return render(request, 'personas/editar_persona.html', {'formulario': formulario,'persona': persona})
 
 def editar_grupo(request,id): 
     grupo = Grupo.objects.get(id=id)
@@ -108,3 +108,9 @@ def eliminar_grupo(request,id):
     grupo = Grupo.objects.get(id=id)
     grupo.delete()
     return redirect('grupos')
+
+def listado_personas(request,rol):
+    print ('llego aqui === ',rol)
+    personas = Persona.objects.filter(rol=rol)
+    print('llego aqui al fomurlario ',personas)
+    return render(request,'personas/index.html',{'personas': personas} ) 

@@ -17,6 +17,9 @@ urlpatterns = [
     path('editar/<int:id>',views.editar_persona,name='editar'), 
     path('buscar_persona/',views.buscar_persona,name='buscar_persona'),
 
+    #listado personas
+    path('listadopersona/<str:rol>/',views.listado_personas,name='listadopersona'),
+
     #grupos
     path('grupos',views.grupos,name='grupos'),
     path('grupos/crear',views.crear_grupo,name='creargrupo'),
