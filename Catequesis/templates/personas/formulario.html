@@ -27,17 +27,28 @@
                     </div>
 
                 {% elif campo.name == 'fecha_nacimiento' %}
-                <div class="mb-3">
-                    <label for="fecha_nacimiento" class="form-label">Fecha Nacimiento</label>
-                    <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" value="{{ campo.value|date:'Y-m-d' }}">
-                    <div class="col-12 help-text">{{ campo.errors }}</div>
-                </div>
+                    <div class="mb-3">
+                        <label for="fecha_nacimiento" class="form-label">Fecha Nacimiento</label>
+                        <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" value="{{ campo.value|date:'Y-m-d' }}">
+                        <div class="col-12 help-text">{{ campo.errors }}</div>
+                    </div>
                 
+                    {% elif campo.name == 'grupo' %}
+                    <div class="mb-3">
+                        <label for="grupo" class="form-label">Grupo</label>
+                        <select class="form-control" name="grupo" id="grupo">
+                            {% for grupo in formulario.fields.grupo.queryset %}
+                                <option value="{{ grupo.id }}" {% if grupo in persona.grupo.all %}selected{% endif %}>
+                                    {{ grupo.nom_grupo }} - {{ grupo.paralelo }} - {{ grupo.dia }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
                 {% else %}
                     <div class="mb-3">
                         <label for="{{ campo.id_for_label }}" class="form-label">{{ campo.label }}</label>
                         {% if campo.field.widget.input_type == 'file' and campo.value %}
-                            <br>
                             <img src="{{ MEDIA_URL }}imagenes/{{ campo.value }}" width="100" alt="" class="src">
                         {% endif %}
                         <input type="{{ campo.field.widget.input_type }}" 
@@ -53,6 +64,7 @@
             </div>
         {% endfor %}
     </div>
+
     <div class="mb-3">
         <input class="btn btn-success" type="submit" value="Enviar" />
         <a class="btn btn-primary" href="{% url 'personas' %}" role="button">Volver</a>

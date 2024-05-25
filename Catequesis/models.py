@@ -26,7 +26,7 @@ class Persona(models.Model):
     sexo = models.CharField(max_length=50, choices=sexo, default='*',verbose_name="Sexo")
     fecha_nacimiento = models.DateField(null=False)
     imagen = models.ImageField( upload_to='imagenes/', null= True,verbose_name="Imagen")
-    #grupo = models.ManyToManyField(Grupo, related_name='Grupo')
+    grupo = models.ManyToManyField(Grupo, related_name='Grupo')
     
     # Me permite mostrar en django admin sobreescribir el metodo str
     def __str__(self):

@@ -31,7 +31,6 @@ def grupos(request):
     return render(request,'grupos/index_grupo.html',{'grupos':grupos})
 
 def crear_persona(request):
-    # Obtener todos los grupos
     grupos = Grupo.objects.all()
 
     if request.method == 'POST':
@@ -70,6 +69,7 @@ def crear_grupo(request):
     return render(request,'grupos/crear_grupo.html',{'forgrupo':forgrupo})
 
 def editar_persona(request, id):
+
     persona = get_object_or_404(Persona, id=id)
     if request.method == 'POST':
         formulario = PersonaForm(request.POST, request.FILES, instance=persona)
@@ -78,7 +78,7 @@ def editar_persona(request, id):
             return redirect('personas')
     else:
         formulario = PersonaForm(instance=persona)
-    return render(request, 'personas/editar_persona.html', {'formulario': formulario})
+    return render(request, 'personas/editar_persona.html', {'formulario': formulario, 'persona': persona})
 
 def editar_grupo(request,id): 
     grupo = Grupo.objects.get(id=id)
