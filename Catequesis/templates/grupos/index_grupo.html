@@ -30,7 +30,7 @@
 
                         {% for grupo in grupos %}
                         <tr>
-                            <td>{{ grupo.id }}</td>
+                            <td>{{ forloop.counter }}</td>
                             <td>{{ grupo.nom_grupo }}</td>
                             <td>{{ grupo.paralelo }}</td>
                             <td>{{ grupo.dia }}</td>

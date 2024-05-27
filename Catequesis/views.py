@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect,get_object_or_404
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from .models import Persona,Grupo
-from datetime import datetime
+from django.contrib import messages
 # Create your views here.
 
 #para el formulario de crear la persona 
@@ -69,16 +69,38 @@ def crear_grupo(request):
     return render(request,'grupos/crear_grupo.html',{'forgrupo':forgrupo})
 
 def editar_persona(request, id):
-
     persona = get_object_or_404(Persona, id=id)
+    
     if request.method == 'POST':
         formulario = PersonaForm(request.POST, request.FILES, instance=persona)
         if formulario.is_valid():
-            formulario.save()
+            persona = formulario.save(commit=False)
+            
+            # Limpiar los grupos actuales
+            persona.grupo.clear()
+            
+            # Obtener el grupo seleccionado del formulario
+            grupo_id = request.POST.get('grupo')
+            if grupo_id:
+                grupo = get_object_or_404(Grupo, id=grupo_id)
+                persona.grupo.add(grupo)
+                
+            persona.save()
+            
+            # Verificar si la persona tiene un grupo asociado e imprimir el nombre del grupo en la consola
+            grupo = persona.grupo.first()
+            if grupo:
+                print(f"Grupo asociado: {grupo.nom_grupo}")
+            else:
+                print("La persona no tiene un grupo asociado.")
+                
+            messages.success(request, "Modificado correctamente")
             return redirect('personas')
     else:
         formulario = PersonaForm(instance=persona)
-    return render(request, 'personas/editar_persona.html', {'formulario': formulario,'persona': persona})
+    
+    return render(request, 'personas/editar_persona.html', {'formulario': formulario, 'persona': persona})
+
 
 def editar_grupo(request,id): 
     grupo = Grupo.objects.get(id=id)

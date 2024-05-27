@@ -34,32 +34,34 @@
                     </div>
                 
                     {% elif campo.name == 'grupo' %}
-                    <div class="mb-3">
-                        <label for="grupo" class="form-label">Grupo</label>
-                        <select class="form-control" name="grupo" id="grupo">
-                            {% for grupo in formulario.fields.grupo.queryset %}
-                                <option value="{{ grupo.id }}" {% if grupo in persona.grupo.all %}selected{% endif %}>
-                                    {{ grupo.nom_grupo }} - {{ grupo.paralelo }} - {{ grupo.dia }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                        <div class="mb-3">
+                            <label for="grupo" class="form-label">Grupo</label>
+                            <select class="form-control" name="grupo" id="grupo" multiple>
+                                <option value="">--- Sin grupo ---</option> <!-- Esta es la opción para no seleccionar ningún grupo -->
+                                {% for grupo in campo.field.queryset %}
+                                    <option value="{{ grupo.id }}" {% if grupo in campo.value.all %}selected{% endif %}>
+                                        {{ grupo.nom_grupo }} - {{ grupo.paralelo }} - {{ grupo.dia }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
                 {% else %}
-                    <div class="mb-3">
-                        <label for="{{ campo.id_for_label }}" class="form-label">{{ campo.label }}</label>
-                        {% if campo.field.widget.input_type == 'file' and campo.value %}
-                            <img src="{{ MEDIA_URL }}imagenes/{{ campo.value }}" width="100" alt="" class="src">
-                        {% endif %}
-                        <input type="{{ campo.field.widget.input_type }}" 
-                            class="form-control" 
-                            name="{{ campo.name }}" 
-                            id="{{ campo.id_for_label }}" 
-                            aria-describedby="helpId" 
-                            placeholder="{{ campo.label }}"
-                            value="{{ campo.value|default:'' }}" />
-                    </div>
+                <div class="mb-3">
+                    <label for="{{ campo.id_for_label }}" class="form-label">{{ campo.label }}</label>
+                    {% if campo.value %}
+                        <img src="{{ campo.value.url }}" width="100" alt="" class="src">
+                    {% endif %}
+                    <input type="{{ campo.field.widget.input_type }}" 
+                        class="form-control" 
+                        name="{{ campo.name }}" 
+                        id="{{ campo.id_for_label }}" 
+                        aria-describedby="helpId" 
+                        placeholder="{{ campo.label }}"
+                        value="{{ campo.value|default:'' }}" />
                     <div class="col-12 help-text">{{ campo.errors }}</div>
+                </div>
+                
                 {% endif %}
             </div>
         {% endfor %}

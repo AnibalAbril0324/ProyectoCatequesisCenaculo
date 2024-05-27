@@ -32,6 +32,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#para los mensajes sweet alert
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
 # Application definition
 
@@ -91,6 +93,7 @@ DATABASES = {
 }
 
 
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -127,6 +130,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
+#STATICFILES_DIRS = [
+#   BASE_DIR / "static",
+#]
+
+STATICFILES_DIRS =(os.path.join(BASE_DIR,'Catequesis/templates/static'),)
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
