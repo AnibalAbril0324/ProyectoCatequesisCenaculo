@@ -46,7 +46,11 @@
                             <td>{{ persona.sexo }}</td>
                             <td>{{ persona.fecha_nacimiento }}</td>
                             <td>
-                                <img src="{{ persona.imagen.url }}" alt="Imagen de {{ persona.nombres }}" height="90" width="90">
+                                {% if persona.imagen %}
+                                    <img src="{{ persona.imagen.url }}" alt="Imagen de {{ persona.nombres }}" height="90" width="90">
+                                {% else %}
+                                    No image
+                                {% endif %}
                             </td>
                             <td>
                                 <a id="" class="btn btn-info" href="{% url 'editar' persona.id %}" role="button">Editar</a>
@@ -61,7 +65,7 @@
             <!-- Mostrar la tabla original si no hay resultados de búsqueda -->
             <h4 class="card-title">Alumnos</h4>
             <div class="table-responsive">
-                <table class="table ">
+                <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -99,7 +103,11 @@
                                 {% endfor %}
                             </td>
                             <td>
-                                <img src="{{ persona.imagen.url }}" alt="Imagen de {{ persona.nombres }}" height="90" width="90">
+                                {% if persona.imagen %}
+                                    <img src="{{ persona.imagen.url }}" alt="Imagen de {{ persona.nombres }}" height="90" width="90">
+                                {% else %}
+                                    No image
+                                {% endif %}
                             </td>
                             <td>
                                 <a id="" class="btn btn-info" href="{% url 'editar' persona.id %}" role="button">Editar</a>

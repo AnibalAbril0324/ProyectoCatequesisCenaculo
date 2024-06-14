@@ -98,8 +98,8 @@ def editar_persona(request, id):
             return redirect('personas')
     else:
         formulario = PersonaForm(instance=persona)
-    
-    return render(request, 'personas/editar_persona.html', {'formulario': formulario, 'persona': persona})
+        print(persona.rol)
+    return render(request, 'personas/editar_persona.html', {'formulario': formulario, 'persona': persona,'assigned_role': persona.rol,'assigned_sexo': persona.sexo})
 
 
 def editar_grupo(request,id): 

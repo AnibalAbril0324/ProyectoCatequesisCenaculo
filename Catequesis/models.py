@@ -21,11 +21,11 @@ class Persona(models.Model):
     apellidos = models.CharField(max_length=50,verbose_name="Apellido")
     direccion = models.CharField(max_length=100,verbose_name="Direccion")
     correo = models.EmailField(max_length=50,verbose_name="Correo")
-    rol = models.CharField(max_length=10, choices=rol, default='*',verbose_name="Rol")
+    rol = models.CharField(max_length=10, choices=rol, default='',verbose_name="Rol")
     telefono = models.CharField(max_length=50,verbose_name="Telefono")
     sexo = models.CharField(max_length=50, choices=sexo, default='*',verbose_name="Sexo")
     fecha_nacimiento = models.DateField(null=False)
-    imagen = models.ImageField( upload_to='imagenes/', null= True,verbose_name="Imagen")
+    imagen = models.ImageField( upload_to='imagenes/', null=True, blank=True ,verbose_name="Imagen")
     grupo = models.ManyToManyField('Grupo', related_name='Grupo', blank=True)
     
     # Me permite mostrar en django admin sobreescribir el metodo str

@@ -1,5 +1,6 @@
 <form enctype="multipart/form-data" method="POST">
     {% csrf_token %}
+    {{ form.as_p }}
     <div class="row">
         {% for campo in formulario %}
 
@@ -8,12 +9,13 @@
             {% endif %}
 
             <div class="col-md-6">
+
                 {% if campo.name == 'sexo' %}
                     <div class="mb-3">
                         <label for="sexo" class="form-label">Sexo</label>
                         <select class="form-control" name="sexo" id="sexo">
-                            <option value="Masculino">Masculino</option>
-                            <option value="Femenino">Femenino</option>
+                            <option value="Masculino" {% if assigned_sexo == 'Masculino' %}selected{% endif %}>Masculino</option>
+                            <option value="Femenino" {% if assigned_sexo == 'Femenino' %}selected{% endif %}>Femenino</option>
                         </select>
                     </div>
 
@@ -21,11 +23,11 @@
                     <div class="mb-3">
                         <label for="rol" class="form-label">Rol</label>
                         <select class="form-control" name="rol" id="rol">
-                            <option value="Alumno">Alumno</option>
-                            <option value="Catequista">Catequista</option>
+                            <option value="Alumno" {% if assigned_role == 'Alumno' %}selected{% endif %}>Alumno</option>
+                            <option value="Catequista" {% if assigned_role == 'Catequista' %}selected{% endif %}>Catequista</option>
                         </select>
                     </div>
-
+                
                 {% elif campo.name == 'fecha_nacimiento' %}
                     <div class="mb-3">
                         <label for="fecha_nacimiento" class="form-label">Fecha Nacimiento</label>
@@ -45,6 +47,8 @@
                                 {% endfor %}
                             </select>
                         </div>
+
+
 
                 {% else %}
                 <div class="mb-3">

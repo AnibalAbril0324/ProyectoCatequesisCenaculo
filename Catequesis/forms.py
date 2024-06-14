@@ -23,8 +23,8 @@ class PersonaForm (forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PersonaForm, self).__init__(*args, **kwargs)
         self.fields['grupo'].required = False  # Permitir valores en blanco
-        
-        
+        self.fields['imagen'].required = False
+
 class GrupoForm (forms.ModelForm):
     class Meta:
         model=Grupo
