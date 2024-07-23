@@ -1,0 +1,10 @@
+/* styles.css */
+.success-check {
+    color: green;
+    font-size: 1.5em; /* Ajusta el tamaño del check si es necesario */
+}
+
+
+.error-message {
+    color: red;
+}

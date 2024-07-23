@@ -7,11 +7,14 @@ class PersonaForm (forms.ModelForm):
         model=Persona
         fields='__all__'
         widgets = {
-            'fecha_nacimiento': forms.DateInput(attrs={'type': 'date'}),
+                
+            'fecha_nacimiento': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'sexo': forms.Select(choices=sexo),
             'rol': forms.Select(choices=rol),
             #'grupo': forms.CheckboxSelectMultiple(),  # Para manejar ManyToMany como checkboxes
             'grupo': forms.SelectMultiple(attrs={'class': 'form-control'}),
+
+            'cedula': forms.TextInput(attrs={'id': 'cedula-field'}),
         }
         
         grupo = forms.ModelMultipleChoiceField(
@@ -19,7 +22,7 @@ class PersonaForm (forms.ModelForm):
         widget=forms.SelectMultiple,  # o forms.CheckboxSelectMultiple si prefieres checkboxes
         required=False
         )
-
+    
     def __init__(self, *args, **kwargs):
         super(PersonaForm, self).__init__(*args, **kwargs)
         self.fields['grupo'].required = False  # Permitir valores en blanco

@@ -15,26 +15,31 @@ class Grupo(models.Model):
         return fila
     
 class Persona(models.Model):
+
+        
     id = models.AutoField(primary_key=True)
-    cedula = models.CharField(max_length=10,verbose_name="Cedula")
+    cedula = models.CharField(max_length=10,
+                            verbose_name="Cedula")
+    
     nombres = models.CharField(max_length=50,verbose_name="Nombre")
     apellidos = models.CharField(max_length=50,verbose_name="Apellido")
     direccion = models.CharField(max_length=100,verbose_name="Direccion")
     correo = models.EmailField(max_length=50,verbose_name="Correo")
     rol = models.CharField(max_length=10, choices=rol, default='',verbose_name="Rol")
-    telefono = models.CharField(max_length=50,verbose_name="Telefono")
+    telefono = models.CharField(max_length=10,verbose_name="Telefono")
     sexo = models.CharField(max_length=50, choices=sexo, default='*',verbose_name="Sexo")
     fecha_nacimiento = models.DateField(null=False)
     imagen = models.ImageField( upload_to='imagenes/', null=True, blank=True ,verbose_name="Imagen")
+
     grupo = models.ManyToManyField('Grupo', related_name='Grupo', blank=True)
     
     # Me permite mostrar en django admin sobreescribir el metodo str
-    def __str__(self):
+    def __str__(self):  
         fila = "Nombres: " +self.nombres+" "+self.apellidos
         return fila
     
-
     def delete(self, using=None, keep_parents=False):
         self.imagen.storage.delete(self.imagen.name)
         super().delete()
-    
+
+        
